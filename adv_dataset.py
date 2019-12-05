@@ -82,6 +82,8 @@ class adv_dataset(Dataset):
             img2 = self.img_transform1(img2)
             img3 = self.img_transform1(img3)
             #print("perform a check")
+            #print("check the values of image")
+            #print(np.unique(img1))
             
             #print(img1_path)
             #print(img2_path)

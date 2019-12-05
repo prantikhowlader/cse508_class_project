@@ -59,20 +59,20 @@ CHECKPOINT_STATE_PATH = os.path.join(model_save_path, 'model_info.pth')
 #DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 torch.cuda.set_device(int(args.gpu_id))
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-transform1 = transforms.Compose([transforms.ToPILImage(), transforms.RandomHorizontalFlip(p=0.5),transforms.RandomVerticalFlip(p=0.5),transforms.RandomRotation((-15,15)),transforms.ToTensor(),
+transform1 = transforms.Compose([transforms.ToPILImage(), transforms.RandomCrop([224,224]),transforms.RandomHorizontalFlip(p=0.5),transforms.RandomVerticalFlip(p=0.5),transforms.RandomRotation((-15,15)),transforms.ToTensor(),
                                  transforms.Normalize(mean=(0.485, 0.456, 0.406),std= (0.229, 0.224, 0.225)) ])
 
 #for train the file: train_images.txt, sample_train_images.txt
 #for test the file: test_images.txtself.image_list1_res_imagen
 train_set = adv_dataset('./fgsm_train.txt',True,transform1)
 
-trainloader = DataLoader(train_set,batch_size = 10,shuffle = True, num_workers =0)
+trainloader = DataLoader(train_set,batch_size = 5,shuffle = True, num_workers =0)
 
 test_set =  adv_dataset('./fgsm_test.txt',True,transform1)
-testloader = DataLoader(test_set, batch_size=10, shuffle=False, num_workers=0)
+testloader = DataLoader(test_set, batch_size=5, shuffle=False, num_workers=0)
 
 val_set =  adv_dataset('./fgsm_val.txt',True,transform1)
-valloader = DataLoader(test_set, batch_size=10, shuffle=False, num_workers=0)
+valloader = DataLoader(test_set, batch_size=5, shuffle=False, num_workers=0)
 #learning_rate
 lr = 1e-4
 num_epochs = int(args.epochs)
